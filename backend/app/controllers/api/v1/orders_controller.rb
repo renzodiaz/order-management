@@ -6,6 +6,18 @@ module Api::V1
       render json: serialize(orders)
     end
 
+    def stats
+      total_orders = Order.count
+      pending_orders = Order.where(status: 0).count
+      delivered_orders = Order.where(status: 1).count
+      payload = [
+        { name: "Total Orders", value: total_orders },
+        { name: "Pending Orders", value: pending_orders },
+        { name: "Delivered Orders", value: delivered_orders }
+      ]
+      render json: payload
+    end
+
     def show
       render json: serialize(order)
     end
