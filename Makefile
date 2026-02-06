@@ -1,6 +1,9 @@
 build:
 	docker-compose -f docker-compose.yml up -d db redis backend frontend
 
+bundle:
+	docker-compose run --rm backend bundle install
+
 bundle.update:
 	docker-compose run --rm --no-deps backend bundle update
 
