@@ -1,4 +1,6 @@
 class Order < ApplicationRecord
+  enum :status, { pending: 0, shipped: 1, delivered: 2 }
+
   validates :customer_name, presence: true
   validates :product_name, presence: true
   validates :quantity, presence: true, numericality: { greater_than: 0 }

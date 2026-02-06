@@ -1,0 +1,46 @@
+module Api::V1
+  class OrdersController < ApplicationController
+    def index
+      orders = Order.page(params[:page] || 1)
+                    .per(params[:per_page] || 10)
+      render json: serialize(orders)
+    end
+
+    def show
+      render json: serialize(order)
+    end
+
+    def create
+      if order.save
+        render json: serialize(order).merge(status: :created)
+      else
+        unprocessable_entity!(order)
+      end
+    end
+
+    def update
+      if order.update(order_params)
+        render json: serialize(order).merge(status: :ok)
+      else
+        unprocessable_entity!(order)
+      end
+    end
+
+    def destroy
+      order.destroy
+      render status: :no_content
+    end
+
+    private
+
+    def order
+      @order ||= params[:id] ? Order.find_by!(id: params[:id])
+                   : Order.new(order_params)
+    end
+
+    def order_params
+      params.require(:order)
+            .permit(:customer_name, :customer_email, :product_name, :quantity, :total_price)
+    end
+  end
+end
