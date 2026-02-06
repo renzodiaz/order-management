@@ -12,7 +12,7 @@ module Api::V1
 
     def create
       if order.save
-        render json: serialize(order).merge(status: :created)
+        render json: serialize(order), status: :created
       else
         unprocessable_entity!(order)
       end
@@ -20,7 +20,7 @@ module Api::V1
 
     def update
       if order.update(order_params)
-        render json: serialize(order).merge(status: :ok)
+        render json: serialize(order), status: :ok
       else
         unprocessable_entity!(order)
       end

@@ -52,4 +52,8 @@ class ApplicationController < ActionController::API
       }
     }
   end
+
+  def resource_not_found
+    render json: { error: "Resource not found" }, status: :not_found
+  end
 end
