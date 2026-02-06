@@ -75,6 +75,7 @@ RSpec.configure do |config|
 
   # Factory Bot
   config.include FactoryBot::Syntax::Methods
+  config.include ActiveJob::TestHelper
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
@@ -85,5 +86,17 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
+  end
+
+  config.before(:each) do
+    # Clear ActionMailer deliveries between tests
+    ActionMailer::Base.deliveries.clear
+
+    # Set ActiveJob queue adapter to test mode
+    ActiveJob::Base.queue_adapter = :test
+
+    # Clear any enqueued jobs
+    ActiveJob::Base.queue_adapter.enqueued_jobs.clear
+    ActiveJob::Base.queue_adapter.performed_jobs.clear
   end
 end
