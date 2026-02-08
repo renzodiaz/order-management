@@ -17,7 +17,14 @@ const OrderForm = ({order, onSuccess}) => {
         formState: { errors },
         reset
     } = useForm({
-        resolver: yupResolver(orderSchema)
+        resolver: yupResolver(orderSchema),
+        defaultValues: {
+            customer_name: order?.customer_name || '',
+            customer_email: order?.customer_email || '',
+            product_name: order?.product_name || '',
+            quantity: order?.quantity || '',
+            total_price: order?.total_price || ''
+        }
     })
     const onSubmit = async (values) => {
         const mutationOptions = {

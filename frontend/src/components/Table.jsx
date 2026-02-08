@@ -4,6 +4,13 @@ import OrderForm from "../components/features/order/OrderForm"
 const Table = ({orders}) => {
     const { openModal, closeModal } = useModalStore()
 
+    const handleEdit = (order) => {
+        openModal({
+            title: "Edit order",
+            content: () => (<OrderForm order={order} onSuccess={closeModal} />)
+        })
+    }
+
     return (
         <div className="px-4 sm:px-6 lg:px-8 pt-5 bg-white shadow rounded-lg mt-8">
             <div className="sm:flex sm:items-center">
@@ -63,9 +70,13 @@ const Table = ({orders}) => {
                                     <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{order.quantity}</td>
                                     <td className="px-3 py-4 text-sm whitespace-nowrap text-gray-500">{order.total_price}</td>
                                     <td className="py-4 pr-4 pl-3 text-right text-sm font-medium whitespace-nowrap sm:pr-0">
-                                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                                        <button
+                                            onClick={() => handleEdit(order)}
+                                            type="button"
+                                            className="text-indigo-600 hover:text-indigo-900"
+                                        >
                                             Edit<span className="sr-only">, {order.customer_email}</span>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
