@@ -1,14 +1,22 @@
 import { useModalStore } from "../hooks/stores/useModalStore"
+import { useDeleteOrder } from "../hooks/useDeleteOrder"
 import OrderForm from "../components/features/order/OrderForm"
 
 const Table = ({orders}) => {
     const { openModal, closeModal } = useModalStore()
+    const deleteOrder = useDeleteOrder()
 
     const handleEdit = (order) => {
         openModal({
             title: "Edit order",
             content: () => (<OrderForm order={order} onSuccess={closeModal} />)
         })
+    }
+
+    const handleDelete = (order) => {
+        if (window.confirm(`Are you sure you want to delete order ${order.customer_name}?`)) {
+            deleteOrder.mutate(order.id)
+        }
     }
 
     return (
@@ -76,6 +84,13 @@ const Table = ({orders}) => {
                                             className="text-indigo-600 hover:text-indigo-900"
                                         >
                                             Edit<span className="sr-only">, {order.customer_email}</span>
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(order)}
+                                            type="button"
+                                            className="ms-2 text-red-600 hover:text-red-900"
+                                        >
+                                            Delete
                                         </button>
                                     </td>
                                 </tr>
