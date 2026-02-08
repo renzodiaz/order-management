@@ -3,6 +3,7 @@ module Api::V1
     def index
       orders = Order.page(params[:page] || 1)
                     .per(params[:per_page] || 10)
+                    .order(created_at: :desc)
       render json: serialize(orders)
     end
 

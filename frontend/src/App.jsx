@@ -1,8 +1,10 @@
-import Header from './components/Header.jsx'
-import StatCard from './components/StatCard.jsx'
+import Header from './components/Header'
+import StatCard from './components/StatCard'
 import { useOrders, useOrderStats } from "./hooks/useOrders";
-import Table from "./components/Table.jsx";
-import Pagination from "./components/Pagination.jsx";
+import { Toaster } from 'react-hot-toast'
+import Table from "./components/Table";
+import Pagination from "./components/Pagination";
+import Modal from "./components/Modal";
 
 const App = () => {
     const { data, isLoading, isError } = useOrders()
@@ -37,6 +39,31 @@ const App = () => {
                   </div>
               </main>
           </div>
+          <Modal />
+          <Toaster
+              position="top-right"
+              toastOptions={{
+                  duration: 3000,
+                  style: {
+                      background: '#363636',
+                      color: '#fff',
+                  },
+                  success: {
+                      duration: 3000,
+                      iconTheme: {
+                          primary: '#10b981',
+                          secondary: '#fff',
+                      },
+                  },
+                  error: {
+                      duration: 4000,
+                      iconTheme: {
+                          primary: '#ef4444',
+                          secondary: '#fff',
+                      },
+                  },
+              }}
+          />
       </div>
     )
 }

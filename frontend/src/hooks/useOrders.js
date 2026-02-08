@@ -24,8 +24,7 @@ export const useOrders = () => {
 
     return useQuery({
         queryKey: ['orders', page, perPage],
-        queryFn: () => fetchOrders({page, perPage}),
-        keepPreviousData: true
+        queryFn: () => fetchOrders({page, perPage})
     })
 }
 
@@ -33,6 +32,6 @@ export const useOrderStats = () => {
     return useQuery({
         queryKey: ['order-stats'],
         queryFn: () => fetchStats(),
-        keepPreviousData: true
+        staleTime: 30_000
     })
 }

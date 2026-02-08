@@ -1,4 +1,9 @@
+import { useModalStore } from "../hooks/stores/useModalStore"
+import OrderForm from "../components/features/order/OrderForm"
+
 const Table = ({orders}) => {
+    const { openModal, closeModal } = useModalStore()
+
     return (
         <div className="px-4 sm:px-6 lg:px-8 pt-5 bg-white shadow rounded-lg mt-8">
             <div className="sm:flex sm:items-center">
@@ -12,8 +17,12 @@ const Table = ({orders}) => {
                     <button
                         type="button"
                         className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={() => openModal({
+                            title: "Create order",
+                            content: () => (<OrderForm onSuccess={closeModal} />)
+                        })}
                     >
-                        Add user
+                        Create order
                     </button>
                 </div>
             </div>
